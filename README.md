@@ -11,61 +11,56 @@
 
    - 思路：一开始想的是先将nums2数组中所有的元素全部放到nums1数组空余的位置，然后再将nums1数组排序，实现代码如下：
 
-     ```
-     class Solution {
-         public void merge(int[] nums1, int m, int[] nums2, int n) {
-             for(int i=0; i<n; i++){
-                 nums1[m+i] = nums2[i];
-             }
+```
+class Solution {
+	public void merge(int[] nums1, int m, int[] nums2, int n) {
+    	for(int i=0; i<n; i++){
+        	nums1[m+i] = nums2[i];
+        }
      
-             for(int i=0; i<m+n; i++){
-                 for(int j=0; j<m+n-i-1; j++) {
-                     if(nums1[j]>nums1[j+1]){
-                         int temp=nums1[j];
-                         nums1[j]=nums1[j+1];
-                         nums1[j+1]=temp;
-                     }
-                 }
-             }
-         }
-     }
-     ```
+        for(int i=0; i<m+n; i++){
+        	for(int j=0; j<m+n-i-1; j++) {
+            	if(nums1[j]>nums1[j+1]){
+                	int temp=nums1[j];
+                    nums1[j]=nums1[j+1];
+                    nums1[j+1]=temp;
+                }
+            }
+        }
+    }
+}
+```
 
-    
-​	可以看到这种方法的时间性能不佳，另一种更好的方法是双指针。为nums1数组和nums2数组分别定义一个指针为p1、p2。
+​				可以看到这种方法的时间性能不佳，另一种更好的方法是双指针。为nums1数组和nums2数组分别定义一个指针为p1、p2。
 
-​	比较p1和p2指针哪个指向的元素最小，就将较小的那个元素保存，并将相应的指针加一。实现代码如下：
+​			比较p1和p2指针哪个指向的元素最小，就将较小的那个元素保存，并将相应的指针加一。实现代码如下：
 
-   ```
-   class Solution {
-       public void merge(int[] nums1, int m, int[] nums2, int n) {
-           int p1 = 0, p2 = 0;
-           int cur;
-           int[] sorted = new int[m + n];
+```
+class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int p1 = 0, p2 = 0;
+        int cur;
+        int[] sorted = new int[m + n];
 
-           while (p1 < m || p2 < n) {
-               if (p1 == m) {
-                   cur = nums2[p2++];
-               } else if (p2 == n) {
-                   cur = nums1[p1++];
-               } else if (nums1[p1] < nums2[p2]) {
-                   cur = nums1[p1++];
-               } else {
-                   cur = nums2[p2++];
-               }
-               sorted[p1+p2-1] = cur;
-           }
+        while (p1 < m || p2 < n) {
+            if (p1 == m) {
+                cur = nums2[p2++];
+            } else if (p2 == n) {
+                cur = nums1[p1++];
+            } else if (nums1[p1] < nums2[p2]) {
+                cur = nums1[p1++];
+            } else {
+                cur = nums2[p2++];
+            }
+            sorted[p1+p2-1] = cur;
+        }
 
-           for (int i = 0; i < m + n; i++) {
-               nums1[i] = sorted[i];
-           }
-       }
-   }
-   ```
-
-代码提交截图如下：
-
-![image-20230810223653139](C:\Users\maowei\AppData\Roaming\Typora\typora-user-images\image-20230810223653139.png)
+        for (int i = 0; i < m + n; i++) {
+            nums1[i] = sorted[i];
+        }
+    }
+}
+```
 
 
 
