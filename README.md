@@ -31,40 +31,37 @@
      }
      ```
 
-     代码提交截图如下：
+    
+​	可以看到这种方法的时间性能不佳，另一种更好的方法是双指针。为nums1数组和nums2数组分别定义一个指针为p1、p2。
 
-     ![image-20230810222859959](C:\Users\maowei\AppData\Roaming\Typora\typora-user-images\image-20230810222859959.png)
+​	比较p1和p2指针哪个指向的元素最小，就将较小的那个元素保存，并将相应的指针加一。实现代码如下：
 
-​				可以看到这种方法的时间性能不佳，另一种更好的方法是双指针。为nums1数组和nums2数组分别定义一个指针为p1、p2。
+   ```
+   class Solution {
+       public void merge(int[] nums1, int m, int[] nums2, int n) {
+           int p1 = 0, p2 = 0;
+           int cur;
+           int[] sorted = new int[m + n];
 
-​			比较p1和p2指针哪个指向的元素最小，就将较小的那个元素保存，并将相应的指针加一。实现代码如下：
+           while (p1 < m || p2 < n) {
+               if (p1 == m) {
+                   cur = nums2[p2++];
+               } else if (p2 == n) {
+                   cur = nums1[p1++];
+               } else if (nums1[p1] < nums2[p2]) {
+                   cur = nums1[p1++];
+               } else {
+                   cur = nums2[p2++];
+               }
+               sorted[p1+p2-1] = cur;
+           }
 
-```
-class Solution {
-    public void merge(int[] nums1, int m, int[] nums2, int n) {
-        int p1 = 0, p2 = 0;
-        int cur;
-        int[] sorted = new int[m + n];
-
-        while (p1 < m || p2 < n) {
-            if (p1 == m) {
-                cur = nums2[p2++];
-            } else if (p2 == n) {
-                cur = nums1[p1++];
-            } else if (nums1[p1] < nums2[p2]) {
-                cur = nums1[p1++];
-            } else {
-                cur = nums2[p2++];
-            }
-            sorted[p1+p2-1] = cur;
-        }
-
-        for (int i = 0; i < m + n; i++) {
-            nums1[i] = sorted[i];
-        }
-    }
-}
-```
+           for (int i = 0; i < m + n; i++) {
+               nums1[i] = sorted[i];
+           }
+       }
+   }
+   ```
 
 代码提交截图如下：
 
