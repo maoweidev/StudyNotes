@@ -1,4 +1,3 @@
-# StudyNotes
 # 笔记
 
 
